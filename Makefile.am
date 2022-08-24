@@ -919,7 +919,7 @@ endif
 
 $(trainingtools): libtesseract.la
 
-EXTRA_PROGRAMS += $(trainingtools)
+EXTRA_PROGRAMS = $(trainingtools)
 
 extralib = libtesseract.la
 extralib += $(libarchive_LIBS)
