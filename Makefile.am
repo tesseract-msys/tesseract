@@ -17,7 +17,7 @@ EXTRA_DIST += CMakeLists.txt tesseract.pc.cmake cmake VERSION
 
 DIST_SUBDIRS = $(SUBDIRS)
 
-EXTRA_PROGRAMS =
+#EXTRA_PROGRAMS =
 
 uninstall-hook:
 	rm -rf $(DESTDIR)$(pkgincludedir)
@@ -676,14 +676,14 @@ libtesseract_la_SOURCES += src/viewer/scrollview.cpp
 libtesseract_la_SOURCES += src/viewer/svmnode.cpp
 libtesseract_la_SOURCES += src/viewer/svutil.cpp
 
-EXTRA_PROGRAMS += svpaint
-svpaint_CPPFLAGS =
-svpaint_CPPFLAGS += -I$(top_builddir)/include
-svpaint_CPPFLAGS += -I$(top_srcdir)/include
-svpaint_CPPFLAGS += -I$(top_srcdir)/src/ccstruct
-svpaint_CPPFLAGS += -I$(top_srcdir)/src/viewer
-svpaint_SOURCES = src/svpaint.cpp
-svpaint_LDADD = libtesseract.la
+#EXTRA_PROGRAMS += svpaint
+#svpaint_CPPFLAGS =
+#svpaint_CPPFLAGS += -I$(top_builddir)/include
+#svpaint_CPPFLAGS += -I$(top_srcdir)/include
+#svpaint_CPPFLAGS += -I$(top_srcdir)/src/ccstruct
+#svpaint_CPPFLAGS += -I$(top_srcdir)/src/viewer
+#svpaint_SOURCES = src/svpaint.cpp
+#svpaint_LDADD = libtesseract.la
 endif
 
 # Rules for src/wordrec.
@@ -767,12 +767,12 @@ endif
 
 if ENABLE_TRAINING
 
-training: $(trainingtools) | $(PROGRAMS)
+training: $(EXTRA_PROGRAMS) | $(PROGRAMS)
 
-training-install: $(trainingtools)
+training-install: $(EXTRA_PROGRAMS)
 	mkdir -p $(DESTDIR)$(bindir)
 	$(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install \
-	$(INSTALL) $(INSTALL_STRIP_FLAG) $(trainingtools) $(DESTDIR)$(bindir)
+	$(INSTALL) $(INSTALL_STRIP_FLAG) $(EXTRA_PROGRAMS) $(DESTDIR)$(bindir)
 
 training-uninstall:
 
@@ -782,6 +782,8 @@ check: libtesseract_training.la
 # dawg_test runs dawg2wordlist and wordlist2dawg.
 check: dawg2wordlist wordlist2dawg
 
+CLEANFILES += $(EXTRA_PROGRAMS)
+
 else
 
 training:
@@ -789,7 +791,7 @@ training:
 
 endif
 
-CLEANFILES += $(EXTRA_PROGRAMS)
+#CLEANFILES += $(EXTRA_PROGRAMS)
 
 training_CPPFLAGS := -DPANGO_ENABLE_ENGINE
 training_CPPFLAGS += -DTESS_COMMON_TRAINING_API=
