@@ -3,7 +3,7 @@ name: msys2
 on:
   #push:
   schedule:
-    - cron: 10 14 * * *
+    - cron: 40 14 * * *
 jobs:
   windows:
     runs-on: windows-2019
